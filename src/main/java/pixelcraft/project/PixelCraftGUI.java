@@ -10,7 +10,6 @@ public class PixelCraftGUI extends Application {
         ImageModel model = new ImageModel();
         MainView view = new MainView(stage);
         model.addObserver(view);
-
         ImageController controller = new ImageController(view, model);
     }
     public static void main(String[] args) {

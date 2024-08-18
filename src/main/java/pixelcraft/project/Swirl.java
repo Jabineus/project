@@ -1,12 +1,19 @@
 package pixelcraft.project;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Swirl extends Converter {
     @Override
     //Twists the image to create a spiral like swirl from the center
-    protected BufferedImage alterImage(BufferedImage image, int width, int height) throws IOException{
-        BufferedImage swirledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    protected Image alterImage(Image image, int width, int height) throws IOException{
+        WritableImage swirledImage = new WritableImage(width, height);
+        PixelReader reader = image.getPixelReader();
+        PixelWriter writer = swirledImage.getPixelWriter();
         int middleX = width / 2;
         int middleY = height / 2;
         int radius = Math.min(width, height); //The radius of the swirl (how big it is)
@@ -26,11 +33,11 @@ public class Swirl extends Converter {
                     //The pixel's color is set to the color of the original image with the moved coordinates
                     //if the moved pixel is within the image size
                     if ((moveY >= 0 && moveY < height) && (moveX >= 0 && moveX < width)) {
-                        ARGB pixel = new ARGB(image.getRGB(moveX, moveY));
-                        swirledImage.setRGB(w, h, pixel.toInt());
+                        ARGB pixel = new ARGB(reader.getArgb(moveX, moveY));
+                        writer.setArgb(w, h, pixel.toInt());
                     }
                 }else{
-                    swirledImage.setRGB(w, h, image.getRGB(w, h));
+                    writer.setArgb(w, h, reader.getArgb(w, h));
                 }
             }
         }

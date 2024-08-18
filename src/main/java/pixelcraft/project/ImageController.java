@@ -15,6 +15,7 @@ public class ImageController {
         // Add event handlers for GUI elements
         view.getApplyEffectButton().setOnAction(e -> applyEffect());
         view.getSaveButton().setOnAction(e -> save());
+        view.getLoadImageButton().setOnAction(e -> load());
     }
 
     private void applyEffect() {
@@ -28,6 +29,13 @@ public class ImageController {
     private void save(){
         try {
             view.saveImage(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void load(){
+        try {
+            view.loadImage(model);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,4 +1,9 @@
 package pixelcraft.project;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -6,18 +11,20 @@ import java.io.IOException;
 public class PopArt extends Converter {
     @Override
     //Gives the image a pop art effect
-    protected BufferedImage alterImage(BufferedImage image, int width, int height) throws IOException{
-        BufferedImage poppedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    protected Image alterImage(Image image, int width, int height) throws IOException{
+        WritableImage poppedImage = new WritableImage(width, height);
+        PixelReader reader = image.getPixelReader();
+        PixelWriter writer = poppedImage.getPixelWriter();
         //Iterates through each pixel
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                ARGB pixel = new ARGB(image.getRGB(x, y));
+                ARGB pixel = new ARGB(reader.getArgb(x, y));
 
                 int red = popColor(pixel.red); //Calculates each component for rgb
                 int green = popColor(pixel.green);
                 int blue = popColor(pixel.blue);
                 ARGB newPixel = new ARGB(pixel.alpha, red, green, blue);
-                poppedImage.setRGB(x, y, newPixel.toInt());
+                writer.setArgb(x, y, newPixel.toInt());
             }
         }
         return poppedImage;

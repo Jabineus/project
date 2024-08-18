@@ -1,5 +1,6 @@
 package pixelcraft.project;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,11 +11,12 @@ import java.util.List;
 
 public class ImageModel implements Subject {
      private List<Observer> observers;
-     private BufferedImage originalImage;
-     private BufferedImage modifiedImage;
+     private Image originalImage;
+     private Image modifiedImage;
 
     public ImageModel() {
         this.observers = new ArrayList<>();
+
     }
     
     @Override
@@ -34,38 +36,28 @@ public class ImageModel implements Subject {
         }
     }
 
-    public BufferedImage getOriginalImage() {
+    public Image getOriginalImage() {
         return originalImage;
     }
 
-    public void setOriginalImage(BufferedImage originalImage) {
-        this.originalImage = originalImage;
-        notifyObservers();
-    }
-
-    public BufferedImage getModifiedImage() {
+    public Image getModifiedImage() {
         return modifiedImage;
     }
 
-    public void setModifiedImage(BufferedImage modifiedImage) {
-        this.modifiedImage = modifiedImage;
-        notifyObservers();
-    }
-
-    public void loadImage(BufferedImage image) {
+    public void loadImage(Image image) {
         this.originalImage = image;
         this.modifiedImage = image;
         notifyObservers();
     }
 
-    public void saveImage(BufferedImage image, String filePath) {
+    public void saveImage(Image image, String filePath) {
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
         WritableImage writableImage = new WritableImage(width, height);
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                bufferedImage.setRGB(x, y, image.getRGB(x, y));
+                bufferedImage.setRGB(x, y, image.getPixelReader().getArgb(x, y));
             }
         }
         try {
