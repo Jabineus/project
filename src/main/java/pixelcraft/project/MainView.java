@@ -3,6 +3,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import javafx.scene.Scene;
@@ -28,6 +30,7 @@ public class MainView implements Observer{
     private ImageView originalImageView;
     private ImageView modifiedImageView;
     private HBox imageSpace;
+    private BorderPane pane;
 
     public MainView(Stage stage, ImageModel model) {
         this.stage = stage;
@@ -36,18 +39,26 @@ public class MainView implements Observer{
     }
 
     private void createUI() {
-        BorderPane pane = new BorderPane();
+        pane = new BorderPane();
         this.applyEffectButton = new Button("Apply Effect");
         this.saveButton = new Button("Save Image");
         this.loadImageButton = new Button("Upload Image");
+
         this.converterOptions = new ComboBox<>();
-        imageSpace = new HBox();
+        converterOptions.getItems().addAll("Grayscale", "Rotate", "Blur", "Vertical Flip", "Pop Art", "Swirl", "Circle Crop", "Frame", "Pixel", "Diagonal Flip");
 
         originalImageView = new ImageView();
         modifiedImageView = new ImageView();
+        originalImageView.setPreserveRatio(true);
+        modifiedImageView.setPreserveRatio(true);
+
+        imageSpace = new HBox();
+        imageSpace.getChildren().addAll(originalImageView, modifiedImageView);
+        imageSpace.setSpacing(15);
 
         VBox layout = new VBox(10);
         layout.getChildren().add(loadImageButton);
+        layout.getChildren().add(new Label("Select an Effect"));
         layout.getChildren().add(converterOptions);
         layout.getChildren().add(applyEffectButton);
         layout.getChildren().add(saveButton);
@@ -59,8 +70,6 @@ public class MainView implements Observer{
         stage.setScene(scene);
         stage.setTitle("PixelCraftGUI");
         stage.show();
-
-        converterOptions.getItems().addAll("Grayscale", "Rotate", "Blur", "Vertical Flip", "Pop Art", "Swirl", "Circle Crop", "Frame", "Pixel", "Diagonal Flip");
     
     }
     public Button getApplyEffectButton() {
@@ -103,9 +112,25 @@ public class MainView implements Observer{
     @Override
     public void update() {
         // Update the original and modified images in the ImageView components
-        this.originalImageView = new ImageView(model.getOriginalImage());
-        this.modifiedImageView = new ImageView(model.getModifiedImage());
-        imageSpace.getChildren().addAll(originalImageView, modifiedImageView);
+        originalImageView.setImage(model.getOriginalImage());
+        modifiedImageView.setImage(model.getModifiedImage());
+
+        originalImageView.setFitWidth(pane.getWidth() / 2 - 100);
+        originalImageView.setFitHeight(pane.getHeight());
+
+        modifiedImageView.setFitWidth(pane.getWidth() / 2 - 100);
+        modifiedImageView.setFitHeight(pane.getHeight());
+
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            originalImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
+            modifiedImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            originalImageView.setFitHeight(newVal.doubleValue());
+            modifiedImageView.setFitHeight(newVal.doubleValue());
+        });
+
 
     }
 }
