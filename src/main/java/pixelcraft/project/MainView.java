@@ -100,6 +100,7 @@ public class MainView implements Observer{
     public void update() {
         // Update the original and modified images in the ImageView components
         modifiedImageView = new ImageView(model.getModifiedImage());
+
     }
 }
 
