@@ -52,6 +52,22 @@ public class MainView implements Observer{
         originalImageView.setPreserveRatio(true);
         modifiedImageView.setPreserveRatio(true);
 
+        originalImageView.setFitWidth(pane.getWidth() / 2 - 100);
+        originalImageView.setFitHeight(pane.getHeight());
+        modifiedImageView.setFitWidth(pane.getWidth() / 2 - 100);
+        modifiedImageView.setFitHeight(pane.getHeight());
+
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            originalImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
+            modifiedImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            originalImageView.setFitHeight(newVal.doubleValue());
+            modifiedImageView.setFitHeight(newVal.doubleValue());
+        });
+
+
         imageSpace = new HBox();
         imageSpace.getChildren().addAll(originalImageView, modifiedImageView);
         imageSpace.setSpacing(15);
@@ -114,23 +130,6 @@ public class MainView implements Observer{
         // Update the original and modified images in the ImageView components
         originalImageView.setImage(model.getOriginalImage());
         modifiedImageView.setImage(model.getModifiedImage());
-
-        originalImageView.setFitWidth(pane.getWidth() / 2 - 100);
-        originalImageView.setFitHeight(pane.getHeight());
-
-        modifiedImageView.setFitWidth(pane.getWidth() / 2 - 100);
-        modifiedImageView.setFitHeight(pane.getHeight());
-
-        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            originalImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
-            modifiedImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
-        });
-
-        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            originalImageView.setFitHeight(newVal.doubleValue());
-            modifiedImageView.setFitHeight(newVal.doubleValue());
-        });
-
 
     }
 }
