@@ -71,7 +71,7 @@ public class ImageModel implements Subject {
     public void applyConverter(Converter converter) {
         if (originalImage != null) {
             try {
-                this.modifiedImage = converter.convert(originalImage);
+                this.modifiedImage = converter.convert(modifiedImage);
                 notifyObservers();
             }catch (Exception e) {
             e.printStackTrace();

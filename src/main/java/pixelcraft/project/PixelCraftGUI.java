@@ -8,7 +8,7 @@ public class PixelCraftGUI extends Application {
     @Override
     public void start(Stage stage) {
         ImageModel model = new ImageModel();
-        MainView view = new MainView(stage);
+        MainView view = new MainView(stage, model);
         model.addObserver(view);
         ImageController controller = new ImageController(view, model);
     }
