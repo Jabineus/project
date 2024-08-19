@@ -25,13 +25,15 @@ public class MainView implements Observer{
     private Button applyEffectButton;
     private Button saveButton;
     private Button loadImageButton;
-    private Button darkThemeButton;
+    private Button changeThemeButton;
     private ComboBox<String> converterOptions;
     private ImageView originalImageView;
     private ImageView modifiedImageView;
     private HBox imageSpace;
+    private VBox menu;
     private BorderPane pane;
     private Label title;
+    private Label label;
 
     public MainView(Stage stage, ImageModel model) {
         this.stage = stage;
@@ -51,11 +53,12 @@ public class MainView implements Observer{
         applyEffectButton = new Button("Apply Effect");
         saveButton = new Button("Save Image");
         loadImageButton = new Button("Upload Image");
-        darkThemeButton = new Button("Dark Theme");
+        changeThemeButton = new Button("Change Theme");
 
-        //Set dropdown menu to select converters
+        //Set dropdown menu to select converters and label
         converterOptions = new ComboBox<>();
         converterOptions.getItems().addAll("Grayscale", "Rotate", "Blur", "Vertical Flip", "Pop Art", "Swirl", "Circle Crop", "Frame", "Pixel", "Diagonal Flip");
+        label = new Label("Select Effect");
 
         //Create image views
         originalImageView = new ImageView();
@@ -85,15 +88,15 @@ public class MainView implements Observer{
         imageSpace.setPadding(new Insets(10));
 
         //Set VBox for the side menu
-        VBox menu = new VBox(15);
+        menu = new VBox(15);
         menu.setPadding(new Insets(25));
         menu.setBackground(new Background(new BackgroundFill(Color.web("#d6b4fc"), null, null)));
         menu.getChildren().add(loadImageButton);
-        menu.getChildren().add(new Label("Select an Effect"));
+        menu.getChildren().add(label);
         menu.getChildren().add(converterOptions);
         menu.getChildren().add(applyEffectButton);
         menu.getChildren().add(saveButton);
-        menu.getChildren().add(darkThemeButton);
+        menu.getChildren().add(changeThemeButton);
 
         pane.setTop(title);
         BorderPane.setAlignment(title, Pos.CENTER);
@@ -114,9 +117,12 @@ public class MainView implements Observer{
         return saveButton;
     }
     public Button getLoadImageButton() {return loadImageButton;}
-    public Button getChangeThemeButton() {return darkThemeButton;}
+    public Button getChangeThemeButton() {return changeThemeButton;}
     public BorderPane getBorderpane() {return pane;}
     public Stage getStage() {return stage;}
+    public Label getLabel() {return label;}
+    public Label getTitle() {return title;}
+    public VBox getVBox() {return menu;}
 
     public String getSelectedConverter() {
         return converterOptions.getValue();
