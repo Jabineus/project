@@ -119,9 +119,7 @@ public class MainView implements Observer{
     public void setTitle(String colour) {title.setStyle(String.format("-fx-text-fill: %s;", colour));}
     public void setVBox(String colour) {menu.setBackground(new Background(new BackgroundFill(Color.web(colour), null, null)));}
     //Get selected converter
-    public String getSelectedConverter() {
-        return converterOptions.getValue();
-    }
+    public String getSelectedConverter() {return converterOptions.getValue();}
     //Open file explorer and load image in model
     public void loadImage(ImageModel model) throws IOException {
         FileChooser fileChooser = new FileChooser();

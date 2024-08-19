@@ -67,9 +67,8 @@ public class ImageModel implements Subject {
                 this.modifiedImage = converter.convert(modifiedImage);
                 notifyObservers();
             }catch (Exception e) {
-            e.printStackTrace();
-        }
-            
+            System.err.println("Cannot apply converter: " + e.getMessage());
+            }
         }
     }
 }

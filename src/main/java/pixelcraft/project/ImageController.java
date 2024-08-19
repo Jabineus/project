@@ -33,7 +33,7 @@ public class ImageController {
         try {
             view.loadImage(model);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Cannot load image: " + e.getMessage());
         }
     }
     //Toggle between light and dark theme
