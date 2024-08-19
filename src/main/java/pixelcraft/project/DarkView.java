@@ -18,14 +18,14 @@ import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 
 
-public class MainView implements Observer{
+public class DarkView implements Observer {
     private Stage stage;
     private ImageModel model;
 
     private Button applyEffectButton;
     private Button saveButton;
     private Button loadImageButton;
-    private Button darkThemeButton;
+    private Button lightThemeButton;
     private ComboBox<String> converterOptions;
     private ImageView originalImageView;
     private ImageView modifiedImageView;
@@ -33,7 +33,7 @@ public class MainView implements Observer{
     private BorderPane pane;
     private Label title;
 
-    public MainView(Stage stage, ImageModel model) {
+    public DarkView(Stage stage, ImageModel model) {
         this.stage = stage;
         this.model = model;
         createUI();
@@ -41,22 +41,24 @@ public class MainView implements Observer{
 
     private void createUI() {
         pane = new BorderPane();
+        pane.setBackground(new Background(new BackgroundFill(Color.web("#363535"), null, null)));
         // Set the title
         title = new Label("PixelCraft Image Editor");
         title.setFont(new Font("Comic Sans MS", 36));
-        title.setStyle("-fx-text-fill: #551a8b;");
+        title.setStyle("-fx-text-fill: #ffffff;");
         title.setPadding(new Insets(15));
 
         //Set buttons
         applyEffectButton = new Button("Apply Effect");
         saveButton = new Button("Save Image");
         loadImageButton = new Button("Upload Image");
-        darkThemeButton = new Button("Dark Theme");
+        lightThemeButton = new Button("Light Theme");
 
-        //Set dropdown menu to select converters
+        //Set dropdown menu to select converters and label
         converterOptions = new ComboBox<>();
         converterOptions.getItems().addAll("Grayscale", "Rotate", "Blur", "Vertical Flip", "Pop Art", "Swirl", "Circle Crop", "Frame", "Pixel", "Diagonal Flip");
-
+        Label label = new Label("Select an Effect");
+        label.setStyle("-fx-text-fill: #ffffff;");
         //Create image views
         originalImageView = new ImageView();
         modifiedImageView = new ImageView();
@@ -87,13 +89,13 @@ public class MainView implements Observer{
         //Set VBox for the side menu
         VBox menu = new VBox(15);
         menu.setPadding(new Insets(25));
-        menu.setBackground(new Background(new BackgroundFill(Color.web("#d6b4fc"), null, null)));
+        menu.setBackground(new Background(new BackgroundFill(Color.web("#000000"), null, null)));
         menu.getChildren().add(loadImageButton);
-        menu.getChildren().add(new Label("Select an Effect"));
+        menu.getChildren().add(label);
         menu.getChildren().add(converterOptions);
         menu.getChildren().add(applyEffectButton);
         menu.getChildren().add(saveButton);
-        menu.getChildren().add(darkThemeButton);
+        menu.getChildren().add(lightThemeButton);
 
         pane.setTop(title);
         BorderPane.setAlignment(title, Pos.CENTER);
@@ -104,7 +106,7 @@ public class MainView implements Observer{
         stage.setScene(scene);
         stage.setTitle("PixelCraftGUI");
         stage.show();
-    
+
     }
     public Button getApplyEffectButton() {
         return applyEffectButton;
@@ -114,7 +116,7 @@ public class MainView implements Observer{
         return saveButton;
     }
     public Button getLoadImageButton() {return loadImageButton;}
-    public Button getChangeThemeButton() {return darkThemeButton;}
+    public Button getChangeThemeButton() {return lightThemeButton;}
     public BorderPane getBorderpane() {return pane;}
     public Stage getStage() {return stage;}
 
@@ -125,7 +127,7 @@ public class MainView implements Observer{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.bmp")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.bmp")
         );
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -139,7 +141,7 @@ public class MainView implements Observer{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Image");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("PNG Files", "*.png")
+                new FileChooser.ExtensionFilter("PNG Files", "*.png")
         );
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
