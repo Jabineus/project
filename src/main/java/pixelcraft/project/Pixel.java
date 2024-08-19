@@ -15,7 +15,7 @@ public class Pixel extends Converter {
         WritableImage pixeledImage = new WritableImage(width, height);
         PixelReader reader = image.getPixelReader();
         PixelWriter writer = pixeledImage.getPixelWriter();
-        int pixelSize = 8; //Determines how big the pixel blocks will be
+        int pixelSize = 10; //Determines how big the pixel blocks will be
         //Iterates through each pixel block in the image
         for (int h = 0; h < height; h += pixelSize) {
             for (int w = 0; w < width; w += pixelSize) {

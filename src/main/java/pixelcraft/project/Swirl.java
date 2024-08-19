@@ -17,7 +17,7 @@ public class Swirl extends Converter {
         int middleX = width / 2;
         int middleY = height / 2;
         int radius = Math.min(width, height); //The radius of the swirl (how big it is)
-        double turn = 0.02; //Twist size
+        double turn = 0.01; //Twist size
         //Iterates through each pixel and determines its position/distance from the center of the image
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {

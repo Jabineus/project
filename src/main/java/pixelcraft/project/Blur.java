@@ -12,7 +12,7 @@ public class Blur extends Converter {
         PixelReader reader = image.getPixelReader();
         PixelWriter writer = blurredImage.getPixelWriter();
         //Iterates through each pixel and calculates the average color of the surrounding pixels to set the new color
-        int surrounding = 4; // Sets the radius of surrounding pixels taken into account and the blur strength
+        int surrounding = 6; // Sets the radius of surrounding pixels taken into account and the blur strength
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 int[] rgba = new int[]{0, 0, 0, 0};//Stores red, green, blue and alpha values respectively

@@ -1,6 +1,7 @@
 package pixelcraft.project;
 
 public class ConverterFactory {
+    //Returns a new object of the user selected converter
     public static Converter getConverter(String converter) {
         switch (converter) {
             case "Grayscale":

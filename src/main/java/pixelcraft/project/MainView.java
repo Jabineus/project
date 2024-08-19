@@ -43,19 +43,19 @@ public class MainView implements Observer{
 
     private void createUI() {
         pane = new BorderPane();
-        // Set the title
+        // Create the title
         title = new Label("PixelCraft Image Editor");
         title.setFont(new Font("Comic Sans MS", 36));
         title.setStyle("-fx-text-fill: #551a8b;");
         title.setPadding(new Insets(15));
 
-        //Set buttons
+        //Create buttons
         applyEffectButton = new Button("Apply Effect");
         saveButton = new Button("Save Image");
         loadImageButton = new Button("Upload Image");
         changeThemeButton = new Button("Change Theme");
 
-        //Set dropdown menu to select converters and label
+        //Create dropdown menu to select converters and label
         converterOptions = new ComboBox<>();
         converterOptions.getItems().addAll("Grayscale", "Rotate", "Blur", "Vertical Flip", "Pop Art", "Swirl", "Circle Crop", "Frame", "Pixel", "Diagonal Flip");
         label = new Label("Select Effect");
@@ -71,19 +71,19 @@ public class MainView implements Observer{
         modifiedImageView.setFitWidth(pane.getWidth() / 2 - 100);
         modifiedImageView.setFitHeight(pane.getHeight());
         //Add event listeners to change image width and height if the window gets resized
-        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            originalImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
-            modifiedImageView.setFitWidth(newVal.doubleValue() / 2 - 100);
+        pane.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            originalImageView.setFitWidth(newWidth.doubleValue() / 2 - 100);
+            modifiedImageView.setFitWidth(newWidth.doubleValue() / 2 - 100);
         });
 
-        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            originalImageView.setFitHeight(newVal.doubleValue());
-            modifiedImageView.setFitHeight(newVal.doubleValue());
+        pane.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+            originalImageView.setFitHeight(newHeight.doubleValue());
+            modifiedImageView.setFitHeight(newHeight.doubleValue());
         });
 
         //Set HBox to display original and modified image views side by side
         imageSpace = new HBox();
-        imageSpace.getChildren().addAll(originalImageView, modifiedImageView);
+        imageSpace.getChildren().addAll(modifiedImageView, originalImageView);
         imageSpace.setSpacing(15);
         imageSpace.setPadding(new Insets(10));
 
@@ -91,13 +91,8 @@ public class MainView implements Observer{
         menu = new VBox(15);
         menu.setPadding(new Insets(25));
         menu.setBackground(new Background(new BackgroundFill(Color.web("#d6b4fc"), null, null)));
-        menu.getChildren().add(loadImageButton);
-        menu.getChildren().add(label);
-        menu.getChildren().add(converterOptions);
-        menu.getChildren().add(applyEffectButton);
-        menu.getChildren().add(saveButton);
-        menu.getChildren().add(changeThemeButton);
-
+        menu.getChildren().addAll(loadImageButton, label, converterOptions, applyEffectButton, saveButton, changeThemeButton);
+        //Place VBox, HBox and title on Borderpane
         pane.setTop(title);
         BorderPane.setAlignment(title, Pos.CENTER);
         pane.setLeft(menu);
@@ -109,24 +104,26 @@ public class MainView implements Observer{
         stage.show();
     
     }
+    //Get Button methods
     public Button getApplyEffectButton() {
         return applyEffectButton;
     }
-
     public Button getSaveButton() {
         return saveButton;
     }
     public Button getLoadImageButton() {return loadImageButton;}
     public Button getChangeThemeButton() {return changeThemeButton;}
-    public BorderPane getBorderpane() {return pane;}
-    public Stage getStage() {return stage;}
-    public Label getLabel() {return label;}
-    public Label getTitle() {return title;}
-    public VBox getVBox() {return menu;}
 
+    //Set pane, title, label and vbox colour methods
+    public void setPane(String colour) {pane.setBackground(new Background(new BackgroundFill(Color.web(colour), null, null)));}
+    public void setLabel(String colour) {label.setStyle(String.format("-fx-text-fill: %s;", colour));}
+    public void setTitle(String colour) {title.setStyle(String.format("-fx-text-fill: %s;", colour));}
+    public void setVBox(String colour) {menu.setBackground(new Background(new BackgroundFill(Color.web(colour), null, null)));}
+    //Get selected converter
     public String getSelectedConverter() {
         return converterOptions.getValue();
     }
+    //Open file explorer and load image in model
     public void loadImage(ImageModel model) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
@@ -140,7 +137,7 @@ public class MainView implements Observer{
             model.loadImage(image);
         }
     }
-
+    //Open file explorer and save image in model
     public void saveImage(ImageModel model) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Image");
