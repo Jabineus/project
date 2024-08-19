@@ -1,7 +1,6 @@
 package pixelcraft.project;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,11 +21,6 @@ public class ImageModel implements Subject {
     @Override
     public void addObserver(Observer observer) {
         this.observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        this.observers.remove(observer);
     }
 
     @Override

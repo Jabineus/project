@@ -19,8 +19,8 @@ import javafx.geometry.Insets;
 
 
 public class MainView implements Observer{
-    private Stage stage;
-    private ImageModel model;
+    final Stage stage;
+    final ImageModel model;
 
     private Button applyEffectButton;
     private Button saveButton;
@@ -29,7 +29,6 @@ public class MainView implements Observer{
     private ComboBox<String> converterOptions;
     private ImageView originalImageView;
     private ImageView modifiedImageView;
-    private HBox imageSpace;
     private VBox menu;
     private BorderPane pane;
     private Label title;
@@ -82,7 +81,7 @@ public class MainView implements Observer{
         });
 
         //Set HBox to display original and modified image views side by side
-        imageSpace = new HBox();
+        HBox imageSpace = new HBox();
         imageSpace.getChildren().addAll(modifiedImageView, originalImageView);
         imageSpace.setSpacing(15);
         imageSpace.setPadding(new Insets(10));
@@ -138,7 +137,7 @@ public class MainView implements Observer{
         }
     }
     //Open file explorer and save image in model
-    public void saveImage(ImageModel model) throws IOException {
+    public void saveImage(ImageModel model) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Image");
         fileChooser.getExtensionFilters().addAll(

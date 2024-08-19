@@ -3,7 +3,7 @@ package pixelcraft.project;
 public class ImageController {
     private MainView view;
     private boolean onDarkView = false;
-    private ImageModel model;
+    private final ImageModel model;
 
     public ImageController(MainView view, ImageModel model) {
         this.view = view;
@@ -26,11 +26,7 @@ public class ImageController {
     }
     //Prompt view to load the file explorer (filechooser)
     private void save(){
-        try {
-            view.saveImage(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        view.saveImage(model);
     }
     //Prompt view to load the file explorer (filechooser)
     private void load(){
